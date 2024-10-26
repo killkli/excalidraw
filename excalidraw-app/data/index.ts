@@ -43,6 +43,9 @@ export type SyncableExcalidrawElement = OrderedExcalidrawElement &
 export const isSyncableElement = (
   element: OrderedExcalidrawElement,
 ): element is SyncableExcalidrawElement => {
+  if (element.type === "text" && element.text.length === 0) {
+    return false;
+  }
   if (element.isDeleted) {
     if (element.updated > Date.now() - DELETED_ELEMENT_TIMEOUT) {
       return true;
